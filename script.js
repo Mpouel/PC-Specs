@@ -16,11 +16,16 @@ async function getSpecs() {
     try {
         const response = await fetch('https://ipinfo.io/json?token=f7eff1da59344c');
         const data = await response.json();
+        const code = data.country;
+        const r = await fetch(`https://restcountries.com/v3.1/alpha/${code}`);
+        const d = await r.json();
+        const name = d[0]?.name?.common || "caca";
         specs.push({
             "IP": data.ip,
-            "Ville": data.city,
-            "Région": data.region,
-            "Pays": data.country
+            "City": data.city,
+            "Region": data.region,
+            "Country code": code,
+            "Country name": name
         });
     } catch (error) {
         console.error("Erreur lors de la récupération de l'IP :", error);
