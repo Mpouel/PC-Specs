@@ -19,25 +19,15 @@ async function getSpecs() {
         const r = await fetch(`https://restcountries.com/v3.1/alpha/${code}`);
         const d = await r.json();
         const name = d[0]?.name?.common || code;
-        const flagUrl = d[0]?.flags?.svg || d[0]?.flags?.png;
+        const flag = d[0]?.flag || "caca";
 
         specs.push({
             "IP": data.ip,
             "City": data.city,
             "Region": data.region,
             "Country code": code,
-            "Country name": name
+            "Country name": `${flag} ${name}`
         });
-
-        // Affichage du drapeau
-        if (flagUrl) {
-            const img = document.createElement("img");
-            img.src = flagUrl;
-            img.alt = `Flag of ${name}`;
-            img.style.width = "80px";
-            img.style.marginTop = "10px";
-            ul.appendChild(img);
-        }
 
     } catch (error) {
         console.error("Erreur lors de la récupération de l'IP ou du drapeau :", error);
